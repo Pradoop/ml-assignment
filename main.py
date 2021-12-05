@@ -1,6 +1,3 @@
-# test comment
-# test comment v.2
-
 import pandas
 from sklearn import linear_model
 
