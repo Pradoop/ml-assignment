@@ -4,6 +4,7 @@
 import pandas as pd
 from sklearn import linear_model
 import matplotlib.pyplot as plt
+import numpy as np
 
 if __name__ == '__main__':
     ford = pd.read_csv("ford.csv", delimiter = ';')
@@ -22,9 +23,14 @@ if __name__ == '__main__':
     plt.show()
     #Werkt zoals bedoeld
 
+    print(np.any(np.isnan(X)))
+    print(np.all(np.isfinite(X)))
+
+    r = df.index[np.isinf(df).any(1)]
+    print(r)
     regr = linear_model.LinearRegression()
     regr.fit(X, y)
 
-    predictedPrice = regr.predict([[2,2018,1,12449,4,145,57,1]])
+    #predictedPrice = regr.predict([[2,2018,1,12449,4,145,57,1]])
     #ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
-    print(predictedPrice)
+    #print(predictedPrice)
