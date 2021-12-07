@@ -6,30 +6,25 @@ from sklearn import linear_model
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    ford = pd.read_csv("ford.csv", header = 0)
-    #usecols = ['model','year','price','transmission','mileage','fuelType','tax','mpg','engineSize']
-    #X = ford[['model', 'year', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize']]
-    #y = ford['price']
+    ford = pd.read_csv("ford.csv", delimiter = ';')
+    df = pd.DataFrame(data = ford)
 
-    print(ford)
+    X = df
+    y = df
+    X = X.reindex([['model', 'year', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize']])
+    y = y.reindex(['price'])
 
-    df = pd.DataFrame(data = ford, columns = ['model', 'year', 'price', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize'])
+    plt.scatter(df['mileage'], df['price'], color = 'red')
+    plt.title('mileage Vs price', fontsize = 14)
+    plt.xlabel('mileage', fontsize=14)
+    plt.ylabel('price', fontsize = 14)
+    plt.grid(True)
+    plt.show()
+    #Werkt zoals bedoeld
 
-    #columns = ['model', 'year', 'price', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize')
+    regr = linear_model.LinearRegression()
+    regr.fit(X, y)
 
-    print(df)
-
-    #X = ford[['model', 'year', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize']]
-    #y = ford['price']
-
-    #print(df['mileage'])
-    #print(df['price'])
-    #plt.scatter(df['mileage'], df['price'], color = 'red')
-    #plt.title('mileage Vs price', fontsize = 14)
-    #plt.xlabel('mileage', fontsize=14)
-    #plt.ylabel('price', fontsize = 14)
-    #plt.grid(True)
-    #plt.show()
-
-# regr = linear_model.LinearRegression()
-# regr.fit(X, y)
+    predictedPrice = regr.predict([[2,2018,1,12449,4,145,57,1]])
+    #ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+    print(predictedPrice)
