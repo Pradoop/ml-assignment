@@ -29,6 +29,8 @@ print("Coefficients: ", list(zip(x, regr.coef_)))
 # crossValidation scores
 scores = cross_val_score(regr, x_train, y_train, cv=5)
 print("Cross-validated scores:", scores)
+predictions = cross_val_predict(regr, x_train, y_train, cv=5)
+plt.scatter(y_train, predictions)
 
 # for test set
 y_predicted_result = regr.predict(x_test)
