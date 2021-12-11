@@ -15,7 +15,7 @@ dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
 y = dataframe['price']
 
-# splitting dataset to training, validation, test and calculate scores for cross validation
+# splitting dataset to training, validation, test
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=100)
 regr = linear_model.LinearRegression()
 
