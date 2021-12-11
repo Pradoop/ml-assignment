@@ -15,9 +15,9 @@ y = dataframe['price']
 # plot for linearity in dataset between year and price
 def yearPlot():
     plt.scatter(dataframe['year'], dataframe['price'], color='red')
-    plt.title('year VS Price in GBP', fontsize=14)
-    plt.xlabel('year', fontsize=14)
-    plt.ylabel('price', fontsize=14)
+    plt.title('Year VS price in GBP', fontsize=14)
+    plt.xlabel('Year', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
 
@@ -25,9 +25,9 @@ def yearPlot():
 # plot for linearity in dataset between engineSize and price
 def engineSizePlot():
     plt.scatter(dataframe['engineSize'], dataframe['price'], color='red')
-    plt.title('engineSize VS Price in GBP', fontsize=14)
-    plt.xlabel('engineSize', fontsize=14)
-    plt.ylabel('price', fontsize=14)
+    plt.title('Engine size VS price in GBP', fontsize=14)
+    plt.xlabel('Engine size', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
 
@@ -35,9 +35,9 @@ def engineSizePlot():
 # plot for linearity in dataset between mileage and price
 def mileagePlot():
     plt.scatter(dataframe['mileage'], dataframe['price'], color='red')
-    plt.title('mileage in Miles VS Price in GBP', fontsize=14)
-    plt.xlabel('mileage', fontsize=14)
-    plt.ylabel('price', fontsize=14)
+    plt.title('Mileage in miles VS price in GBP', fontsize=14)
+    plt.xlabel('Mileage', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
 
@@ -45,9 +45,9 @@ def mileagePlot():
 # plot for linearity in dataset between tax and price
 def taxPlot():
     plt.scatter(dataframe['tax'], dataframe['price'], color='red')
-    plt.title('tax in GBP VS Price in GBP', fontsize=14)
-    plt.xlabel('tax', fontsize=14)
-    plt.ylabel('price', fontsize=14)
+    plt.title('Tax in GBP VS price in GBP', fontsize=14)
+    plt.xlabel('Tax', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
 
@@ -55,9 +55,9 @@ def taxPlot():
 # plot for linearity in dataset between mpg and price
 def mpgPlot():
     plt.scatter(dataframe['mpg'], dataframe['price'], color='red')
-    plt.title('mpg VS Price in GBP', fontsize=14)
-    plt.xlabel('mileage', fontsize=14)
-    plt.ylabel('price', fontsize=14)
+    plt.title('MPG VS price in GBP', fontsize=14)
+    plt.xlabel('MPG', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
 

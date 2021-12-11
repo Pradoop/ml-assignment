@@ -21,10 +21,10 @@ regr = linear_model.LinearRegression()
 regr.fit(x_train, y_train)
 
 # crossValidation scores
-scores = cross_val_score(regr, x_train, y_train, cv=5)
+scores = cross_val_score(regr, x_train, y_train, cv=4)
 print("Cross-validated scores:", scores)
 
-predictions = cross_val_predict(regr, x_train, y_train, cv=5)
+predictions = cross_val_predict(regr, x_train, y_train, cv=4)
 plt.scatter(y_train, predictions)
 
 print("Intercept: ", regr.intercept_)
