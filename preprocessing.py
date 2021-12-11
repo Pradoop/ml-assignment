@@ -12,6 +12,7 @@ x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelTy
 y = dataframe['price']
 
 
+
 # plot for linearity in dataset between year and price
 def yearPlot():
     plt.scatter(dataframe['year'], dataframe['price'], color='red')

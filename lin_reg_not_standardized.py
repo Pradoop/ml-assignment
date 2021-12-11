@@ -40,6 +40,8 @@ print("Predicted price values: ", list(map('{:.2f}'.format, y_predicted_result))
 comparison = pandas.DataFrame({'Actual test value': y_test, 'Predicted value': y_predicted_result})
 print(comparison.head())
 
+
+
 # Evaluation metrics
 meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
 meanSqErr = metrics.mean_squared_error(y_test, y_predicted_result)

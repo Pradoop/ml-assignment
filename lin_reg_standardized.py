@@ -18,13 +18,13 @@ x_train_new = (x_train - x_train.mean()) / x_train.std()
 x_test_new = (x_test - x_test.mean()) / x_test.std()
 
 regr = linear_model.LinearRegression()
-regr.fit(x_train, y_train)
+regr.fit(x_train_new, y_train)
 
 # crossValidation scores
-scores = cross_val_score(regr, x_train, y_train, cv=4)
+scores = cross_val_score(regr, x_train_new, y_train, cv=4)
 print("Cross-validated scores:", scores)
 
-predictions = cross_val_predict(regr, x_train, y_train, cv=4)
+predictions = cross_val_predict(regr, x_train_new, y_train, cv=4)
 plt.scatter(y_train, predictions)
 
 print("Intercept: ", regr.intercept_)
@@ -40,7 +40,7 @@ meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
 meanSqErr = metrics.mean_squared_error(y_test, y_predicted_result)
 rootMeanSqErr = np.sqrt(metrics.mean_squared_error(y_test, y_predicted_result))
 
-print('R squared: {:.2f}'.format(regr.score(x, y) * 100))
+print('R squared: {:.2f}'.format(regr.score(x_test_new, y_test) * 100))
 print('Mean Absolute Error: {:.2f}'.format(meanAbErr))
 print('Mean Square Error: {:.2f}'.format(meanSqErr))
 print('Root Mean Square Error: {:.2f}'.format(rootMeanSqErr))
