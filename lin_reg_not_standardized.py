@@ -26,7 +26,7 @@ regr.fit(x_train, y_train.values)
 print("Intercept: ", regr.intercept_)
 print("Coefficients: ", list(zip(x, regr.coef_)))
 
-# crossValidation scores
+# crossValidation scores and plot
 scores = cross_val_score(regr, x_train, y_train, cv=5)
 print("Cross-validated scores:", scores)
 predictions = cross_val_predict(regr, x_train, y_train, cv=5)
