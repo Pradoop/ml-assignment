@@ -30,7 +30,6 @@ print("Coefficients: ", list(zip(x, regr.coef_)))
 scores = cross_val_score(regr, x_train, y_train, cv=5)
 print("Cross-validated scores:", scores)
 predictions = cross_val_predict(regr, x_train, y_train, cv=5)
-plt.scatter(y_train, predictions)
 
 # for test set
 y_predicted_result = regr.predict(x_test)
@@ -40,7 +39,14 @@ print("Predicted price values: ", list(map('{:.2f}'.format, y_predicted_result))
 comparison = pandas.DataFrame({'Actual test value': y_test, 'Predicted value': y_predicted_result})
 print(comparison.head())
 
-
+# plot
+plt.scatter(x_test['year'], y_test, color='red')
+plt.plot(x_test['year'], y_predicted_result, color='k', label='Regression model')
+plt.title('Year VS price in GBP', fontsize=14)
+plt.xlabel('Year', fontsize=14)
+plt.ylabel('Price in GBP', fontsize=14)
+plt.grid(True)
+plt.show()
 
 # Evaluation metrics
 meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
