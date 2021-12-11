@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 
 # file opening
 dataframe = pandas.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
+dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 
 # separating features dataset
 x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
@@ -37,7 +38,7 @@ meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
 meanSqErr = metrics.mean_squared_error(y_test, y_predicted_result)
 rootMeanSqErr = np.sqrt(metrics.mean_squared_error(y_test, y_predicted_result))
 
-print('R squared: {:.2f}'.format(regr.score(x, y)*100))
+print('R squared: {:.2f}'.format(regr.score(x, y) * 100))
 print('Mean Absolute Error: {:.2f}'.format(meanAbErr))
 print('Mean Square Error: {:.2f}'.format(meanSqErr))
 print('Root Mean Square Error: {:.2f}'.format(rootMeanSqErr))
