@@ -1,36 +1,45 @@
-# test comment
-# test comment v.2
-
-import pandas as pd
-from sklearn import linear_model
-import matplotlib.pyplot as plt
+import sys
 import numpy as np
+import matplotlib.pyplot as plt  # To visualize
+import pandas as pd  # To read data
+from sklearn import linear_model
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
 
-if __name__ == '__main__':
-    ford = pd.read_csv("ford.csv", delimiter = ';')
-    df = pd.DataFrame(data = ford)
+ford = pd.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
 
-    X = df
-    y = df
-    X = X.reindex([['model', 'year', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg', 'engineSize']])
-    y = y.reindex(['price'])
+x = ford[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
+y = ford['price']
 
-    plt.scatter(df['mileage'], df['price'], color = 'red')
-    plt.title('mileage Vs price', fontsize = 14)
-    plt.xlabel('mileage', fontsize=14)
-    plt.ylabel('price', fontsize = 14)
-    plt.grid(True)
-    plt.show()
-    #Werkt zoals bedoeld
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=100)
 
-    print(np.any(np.isnan(X)))
-    print(np.all(np.isfinite(X)))
+x_train_new = x_train[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
+x_train[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']] = (x_train_new - x_train_new.mean()) / x_train_new.std()
 
-    r = df.index[np.isinf(df).any(1)]
-    print(r)
-    regr = linear_model.LinearRegression()
-    regr.fit(X, y)
+mean = x_train_new.mean()
+dev = x_train_new.std()
 
-    #predictedPrice = regr.predict([[2,2018,1,12449,4,145,57,1]])
-    #ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
-    #print(predictedPrice)
+x_test_new = x_test[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
+x_test[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']] = (x_test_new-x_test_new.mean())/x_test_new.std()
+#x_test[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']] = (x_test_new - mean) / dev
+
+regr = linear_model.LinearRegression()
+regr.fit(x_train, y_train)
+
+print("Intercept: ", regr.intercept_)
+print("Coefficients: ", list(zip(x, regr.coef_)))
+
+y_predicted_result = regr.predict(x_test)
+print("Predicted price values: ", list(map('{:.2f}'.format, y_predicted_result)))
+
+comparison = pd.DataFrame({'Training value': y_test, 'Predicted value': y_predicted_result})
+print(comparison.head())
+
+meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
+meanSqErr = metrics.mean_squared_error(y_test, y_predicted_result)
+rootMeanSqErr = np.sqrt(metrics.mean_squared_error(y_test, y_predicted_result))
+
+print('R squared: {:.2f}'.format(regr.score(x, y) * 100))
+print('Mean Absolute Error: {:.2f}'.format(meanAbErr))
+print('Mean Square Error: {:.2f}'.format(meanSqErr))
+print('Root Mean Square Error: {:.2f}'.format(rootMeanSqErr))
