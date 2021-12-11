@@ -10,11 +10,10 @@ from sklearn.model_selection import train_test_split
 
 # file opening
 dataframe = pandas.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
-#dataframe = dataframe.sample(frac=1).reset_index(drop=True)
+dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 
 # separating features dataset
 x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
-#x = dataframe[['year', 'mileage']]
 y = dataframe['price']
 
 # splitting dataset to training and test
