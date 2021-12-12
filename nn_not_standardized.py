@@ -16,7 +16,7 @@ from tensorflow.python.keras.models import Sequential
 
 # file opening
 dataframe = pandas.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
-# dataframe = dataframe.sample(frac=1).reset_index(drop=True)
+dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 
 # separating features dataset and mentioning categorical values so that neural network doesnt rank them
 x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
@@ -47,8 +47,9 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.
 # neurons = #samples in training/(alpha*(#input neurons + #output neurons) = 540
 
 model = Sequential()
-model.add(Dense(8, input_dim=9, kernel_initializer='normal', activation='relu'))
-model.add(Dense(2670, activation='relu'))
+model.add(Dense(9, input_dim=9, kernel_initializer='normal', activation='elu'))
+model.add(Dense(540, activation='elu'))
+model.add(Dense(540, activation='elu'))
 model.add(Dense(1, activation='linear'))
 model.summary()
 
@@ -68,7 +69,7 @@ plt.plot(history.history['val_loss'])
 plt.title('Model loss for 30 epochs and batch size of 150')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['train', 'validation'], loc='upper left')
+plt.legend(['Training', 'Test'], loc='upper left')
 plt.show()
 
 # Epochs and batch size 30
@@ -84,10 +85,10 @@ print(history.history.keys())
 # "Loss"
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
-plt.title('Model loss for 30 epochs and batch_size of 30')
+plt.title('Model loss for 30 epochs and batch size of 30')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['Train', 'Validation'], loc='upper left')
+plt.legend(['Training', 'Test'], loc='upper left')
 plt.show()
 
 # Epochs 100 and batch size 30
@@ -106,7 +107,7 @@ plt.plot(history.history['val_loss'])
 plt.title('Model loss for 100 epochs and batch size of 30')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['Train', 'Validation'], loc='upper left')
+plt.legend(['Training', 'Test'], loc='upper left')
 plt.show()
 
 # Epochs 100 and batch size 150
@@ -125,5 +126,5 @@ plt.plot(history.history['val_loss'])
 plt.title('Model loss for 100 epochs and batch size of 150')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['Train', 'Validation'], loc='upper left')
+plt.legend(['Training', 'Test'], loc='upper left')
 plt.show()
