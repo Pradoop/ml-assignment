@@ -20,6 +20,7 @@ from sklearn.preprocessing import StandardScaler
 import sys
 
 dataframe = pd.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
+dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 
 y_data = np.array(dataframe['price'])
 x_model = dataframe.model.astype("category").cat.codes
@@ -49,31 +50,47 @@ print(scaler_y.fit(y_val))
 yval_scale=scaler_y.transform(y_val)
 
 model=Sequential()
-model.add(Dense(9, input_dim=9, kernel_initializer='normal', activation='relu'))
-model.add(Dense(540, activation='relu'))
-model.add(Dense(540, activation='relu'))
+model.add(Dense(9, input_dim=9, kernel_initializer='normal', activation='elu'))
+model.add(Dense(540, activation='elu'))
+model.add(Dense(540, activation='elu'))
 model.add(Dense(1, activation='linear'))
 model.summary()
 
-model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-history=model.fit(xtrain_scale, ytrain_scale, epochs=100, batch_size=30, verbose=1, validation_split=0.2)
+model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+history = model.fit(xtrain_scale, ytrain_scale, epochs=30, batch_size=150, verbose=1, validation_split=0.2)
 predictions = model.predict(xval_scale)
-
+predictions = scaler_y.inverse_transform(predictions)
+print("Predictions for Epochs 30 and batch size 150", predictions)
+print("MAE for Epochs 30 and batch size 150", mean_absolute_error(y_val, predictions))
+print("MSE for Epochs 30 and batch size 150", mean_squared_error(y_val, predictions))
+print("RMSE for Epochs 30 and batch size 150", math.sqrt(mean_squared_error(y_val, predictions)))
 print(history.history.keys())
-# "Loss"
+
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
-plt.title('model loss')
+plt.title('Model loss for 100 epochs and batch size of 150')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['train', 'validation'], loc='upper left')
+plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
 
-predictions = scaler_y.inverse_transform(predictions)
-mae = mean_absolute_error(y_val, predictions)
-print(mae)
-mse = mean_squared_error(y_val, predictions)
-math.sqrt(mse)
-print(mse)
-np.mean(y_val)
-np.mean(predictions)
+
+# Epochs 100 and batch size 150
+# model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+# history = model.fit(xtrain_scale, ytrain_scale, epochs=100, batch_size=150, verbose=1, validation_split=0.2)
+# predictions = model.predict(xval_scale)
+# predictions = scaler_y.inverse_transform(predictions)
+# print("Predictions for Epochs 100 and batch size 150", predictions)
+# print("MAE for Epochs 100 and batch size 150", mean_absolute_error(y_val, predictions))
+# print("MSE for Epochs 100 and batch size 150", mean_squared_error(y_val, predictions))
+# print("RMSE for Epochs 100 and batch size 150", math.sqrt(mean_squared_error(y_val, predictions)))
+# print(history.history.keys())
+#
+# # Loss plot
+# plt.plot(history.history['loss'])
+# plt.plot(history.history['val_loss'])
+# plt.title('Model loss for 100 epochs and batch size of 150')
+# plt.ylabel('loss')
+# plt.xlabel('epoch')
+# plt.legend(['Train', 'Test'], loc='upper left')
+# plt.show()
