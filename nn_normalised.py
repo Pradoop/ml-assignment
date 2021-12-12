@@ -36,8 +36,8 @@ X_train, X_val, y_train, y_val = train_test_split(x_data, y_data)
 
 y_train=np.reshape(y_train, (-1,1))
 y_val=np.reshape(y_val, (-1,1))
-scaler_x = StandardScaler()
-scaler_y = StandardScaler()
+scaler_x = MinMaxScaler()
+scaler_y = MinMaxScaler()
 
 print(scaler_x.fit(X_train))
 xtrain_scale=scaler_x.transform(X_train)
