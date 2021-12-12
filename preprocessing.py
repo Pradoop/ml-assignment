@@ -12,6 +12,15 @@ x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelTy
 y = dataframe['price']
 
 
+# plot for linearity in dataset between model and price
+def modelPlot():
+    plt.scatter(dataframe['model'], dataframe['price'], color='red')
+    plt.title('Model VS price in GBP', fontsize=14)
+    plt.xlabel('Model', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
+    plt.grid(True)
+    plt.show()
+
 
 # plot for linearity in dataset between year and price
 def yearPlot():
@@ -33,11 +42,30 @@ def engineSizePlot():
     plt.show()
 
 
+# plot for linearity in dataset between transmission and price
+def transmissionPlot():
+    plt.scatter(dataframe['transmission'], dataframe['price'], color='red')
+    plt.title('Transmission VS price in GBP', fontsize=14)
+    plt.xlabel('Transmission', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
+    plt.grid(True)
+    plt.show()
+
+
 # plot for linearity in dataset between mileage and price
 def mileagePlot():
     plt.scatter(dataframe['mileage'], dataframe['price'], color='red')
     plt.title('Mileage in miles VS price in GBP', fontsize=14)
     plt.xlabel('Mileage', fontsize=14)
+    plt.ylabel('Price in GBP', fontsize=14)
+    plt.grid(True)
+    plt.show()
+
+# plot for linearity in dataset between year and price
+def fuelTypePlot():
+    plt.scatter(dataframe['fuelType'], dataframe['price'], color='red')
+    plt.title('Fuel type VS price in GBP', fontsize=14)
+    plt.xlabel('Fuel type', fontsize=14)
     plt.ylabel('Price in GBP', fontsize=14)
     plt.grid(True)
     plt.show()
@@ -64,8 +92,12 @@ def mpgPlot():
 
 
 if __name__ == '__main__':
+    modelPlot()
+    transmissionPlot()
+    fuelTypePlot()
     yearPlot()
     mpgPlot()
     engineSizePlot()
     taxPlot()
     mileagePlot()
+

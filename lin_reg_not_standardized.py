@@ -40,13 +40,13 @@ comparison = pandas.DataFrame({'Actual test value': y_test, 'Predicted value': y
 print(comparison.head())
 
 # plot
-plt.scatter(x_test['year'], y_test, color='red')
-plt.plot(x_test['year'], y_predicted_result, color='k', label='Regression model')
-plt.title('Year VS price in GBP', fontsize=14)
-plt.xlabel('Year', fontsize=14)
-plt.ylabel('Price in GBP', fontsize=14)
-plt.grid(True)
-plt.show()
+#plt.scatter(x_test['year'], y_test, color='red')
+#plt.plot(x_test['year'], y_predicted_result, color='k', label='Regression model')
+#plt.title('Year VS price in GBP', fontsize=14)
+#plt.xlabel('Year', fontsize=14)
+#plt.ylabel('Price in GBP', fontsize=14)
+#plt.grid(True)
+#plt.show()
 
 # Evaluation metrics
 meanAbErr = metrics.mean_absolute_error(y_test, y_predicted_result)
