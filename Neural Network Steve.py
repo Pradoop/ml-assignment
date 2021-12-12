@@ -2,11 +2,13 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.random import seed
-seed(1)
+
+
 import pandas as pd
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 import tensorflow
+
 tensorflow.random.set_seed(1)
 from tensorflow.python.keras.layers import Dense
 from tensorflow.keras.layers import Dropout
@@ -22,34 +24,38 @@ import sys
 dataframe = pd.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
 dataframe = dataframe.sample(frac=1).reset_index(drop=True)
 
-y_data = np.array(dataframe['price'])
-x_model = dataframe.model.astype("category").cat.codes
-x_trans = dataframe.transmission.astype("category").cat.codes
-x_fuel = dataframe.fuelType.astype("category").cat.codes
+x = dataframe[['model', 'year', 'engineSize', 'transmission', 'mileage', 'fuelType', 'tax', 'mpg']]
+y = dataframe['price']
+
+x_model = x.model.astype("category").cat.codes
+x_trans = x.transmission.astype("category").cat.codes
+x_fuel = x.fuelType.astype("category").cat.codes
 
 x_model = pd.Series(x_model)
 x_trans = pd.Series(x_trans)
 x_fuel = pd.Series(x_fuel)
 
-x_data = np.column_stack((x_model, dataframe['year'], dataframe['engineSize'], x_trans, dataframe['mileage'], x_fuel, dataframe['tax'], dataframe['mpg']))
+x_data = np.column_stack((x_model, x['year'], x['engineSize'], x_trans, x['mileage'], x_fuel, x['tax'], x['mpg']))
+y_data = np.row_stack(y)
 x_data = sm.add_constant(x_data, prepend=True)
-X_train, X_val, y_train, y_val = train_test_split(x_data, y_data)
 
-y_train=np.reshape(y_train, (-1,1))
-y_val=np.reshape(y_val, (-1,1))
+X_train, X_val, y_train, y_val = train_test_split(x_data, y_data, test_size=0.2, random_state=100)
+
+y_train = np.reshape(y_train, (-1, 1))
+y_val = np.reshape(y_val, (-1, 1))
 scaler_x = StandardScaler()
 scaler_y = StandardScaler()
 
 print(scaler_x.fit(X_train))
-xtrain_scale=scaler_x.transform(X_train)
+xtrain_scale = scaler_x.transform(X_train)
 print(scaler_x.fit(X_val))
-xval_scale=scaler_x.transform(X_val)
+xval_scale = scaler_x.transform(X_val)
 print(scaler_y.fit(y_train))
-ytrain_scale=scaler_y.transform(y_train)
+ytrain_scale = scaler_y.transform(y_train)
 print(scaler_y.fit(y_val))
-yval_scale=scaler_y.transform(y_val)
+yval_scale = scaler_y.transform(y_val)
 
-model=Sequential()
+model = Sequential()
 model.add(Dense(9, input_dim=9, kernel_initializer='normal', activation='elu'))
 model.add(Dense(540, activation='elu'))
 model.add(Dense(540, activation='elu'))
@@ -73,7 +79,6 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
-
 
 # Epochs 100 and batch size 150
 # model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
