@@ -50,5 +50,21 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.
 # neurons = #samples in training/(alpha*(#input neurons + #output neurons) = 540
 
 model = Sequential()
+model.add(Dense(8, input_dim=9, kernel_initializer='normal', activation='relu'))
+model.add(Dense(2670, activation='relu'))
+model.add(Dense(1, activation='linear'))
+model.summary()
 
+model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
+history=model.fit(x_train, y_train, epochs=30, batch_size=150, verbose=1, validation_split=0.2)
+predictions = model.predict(x_test)
 
+print(history.history.keys())
+# "Loss"
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'validation'], loc='upper left')
+plt.show()
