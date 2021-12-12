@@ -1,21 +1,18 @@
+import math
 import sys
-import numpy
+
 import numpy as np
+import pandas  # To read data
 import pandas as pd
 import statsmodels.api as sm
-import statsmodels.formula.api as smf
-from matplotlib import pyplot as plt
-import pandas  # To read data
-from sklearn import linear_model
-from sklearn import metrics
-from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
-
 import tensorflow
+from matplotlib import pyplot as plt
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import train_test_split
+
 tensorflow.random.set_seed(1)
 from tensorflow.python.keras.layers import Dense
-from tensorflow.keras.layers import Dropout
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.wrappers.scikit_learn import KerasRegressor
 
 # file opening
 dataframe = pandas.read_csv(sys.path[0] + "/files/ford.csv", sep=';')
@@ -55,16 +52,78 @@ model.add(Dense(2670, activation='relu'))
 model.add(Dense(1, activation='linear'))
 model.summary()
 
-model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-history=model.fit(x_train, y_train, epochs=30, batch_size=150, verbose=1, validation_split=0.2)
+# Epochs 30 and batch size 150
+model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+history = model.fit(x_train, y_train, epochs=30, batch_size=150, verbose=1, validation_split=0.2)
 predictions = model.predict(x_test)
-
+print("Predictions for Epochs 30 and batch size 150", predictions)
+print("MAE for Epochs 30 and batch size 150", mean_absolute_error(y_test, predictions))
+print("MSE for Epochs 30 and batch size 150", mean_squared_error(y_test, predictions))
+print("RMSE for Epochs 30 and batch size 150", math.sqrt(mean_squared_error(y_test, predictions)))
 print(history.history.keys())
+
 # "Loss"
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
-plt.title('model loss')
+plt.title('Model loss for 30 epochs and batch size of 150')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'validation'], loc='upper left')
+plt.show()
+
+# Epochs and batch size 30
+model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+history = model.fit(x_train, y_train, epochs=30, batch_size=30, verbose=1, validation_split=0.2)
+predictions = model.predict(x_test)
+print("Predictions for Epochs 30 and batch size 30", predictions)
+print("MAE for Epochs 30 and batch size 30", mean_absolute_error(y_test, predictions))
+print("MSE for Epochs 30 and batch size 30", mean_squared_error(y_test, predictions))
+print("RMSE for Epochs 30 and batch size 30", math.sqrt(mean_squared_error(y_test, predictions)))
+print(history.history.keys())
+
+# "Loss"
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss for 30 epochs and batch_size of 30')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+
+# Epochs 100 and batch size 30
+model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+history = model.fit(x_train, y_train, epochs=100, batch_size=30, verbose=1, validation_split=0.2)
+predictions = model.predict(x_test)
+print("Predictions for Epochs 100 and batch size 30", predictions)
+print("MAE for Epochs 100 and batch size 30", mean_absolute_error(y_test, predictions))
+print("MSE for Epochs 100 and batch size 30", mean_squared_error(y_test, predictions))
+print("RMSE for Epochs 100 and batch size 30", math.sqrt(mean_squared_error(y_test, predictions)))
+print(history.history.keys())
+
+# "Loss"
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss for 100 epochs and batch size of 30')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+
+# Epochs 100 and batch size 150
+model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+history = model.fit(x_train, y_train, epochs=100, batch_size=150, verbose=1, validation_split=0.2)
+predictions = model.predict(x_test)
+print("Predictions for Epochs 100 and batch size 150", predictions)
+print("MAE for Epochs 100 and batch size 150", mean_absolute_error(y_test, predictions))
+print("MSE for Epochs 100 and batch size 150", mean_squared_error(y_test, predictions))
+print("RMSE for Epochs 100 and batch size 150", math.sqrt(mean_squared_error(y_test, predictions)))
+print(history.history.keys())
+
+# Loss plot
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss for 100 epochs and batch size of 150')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
 plt.show()
